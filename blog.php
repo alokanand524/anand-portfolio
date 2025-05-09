@@ -21,7 +21,7 @@
 
             <div class="blog-wrap">
                 <div class="blog-card">
-                    <img src="images/alokimage.jpeg" alt="">
+                    <img src="images/webrtc-Main.png" alt="">
                     <div class="blog-details">
                         <h4>Lets know what is webRTC and how it Work</h4>
                         <p>First, webRTC uses UDP, and UDP is not a reliable protocol for transferring important data. UDP is good at sending data really fast but it doesn’t check whether or not the data is being received. So UDP is great for video because the data gets there fast and if we lose a few frames it’s not a big deal.</p>
