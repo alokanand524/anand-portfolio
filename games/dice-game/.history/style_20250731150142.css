@@ -1,0 +1,106 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.game-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.dice-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.player, .computer {
+  flex: 1 1 40%;
+  margin-bottom: 20px;
+}
+
+.dice {
+  font-size: 5rem;
+  padding: 10px;
+  transition: transform 0.3s;
+}
+
+.dice.animate {
+  transform: rotate(360deg) scale(1.2);
+}
+
+#roll-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#roll-btn:hover {
+  background-color: #2980b9;
+}
+
+#result {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0 20px;
+}
+
+#history-log {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dark-toggle {
+  margin-bottom: 20px;
+  display: block;
+  font-size: 1rem;
+}
+
+/* Dark mode */
+/* body.dark {
+  background-color: #222;
+  color: #fff;
+}
+
+body.dark .dice {
+  background-color: #333;
+}
+
+body.dark #roll-btn {
+  background-color: #555;
+}
+
+body.dark #roll-btn:hover {
+  background-color: #666;
+} */
+
+@media (max-width: 600px) {
+  .dice-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dice {
+    font-size: 4rem;
+  }
+
+  #roll-btn {
+    width: 80%;
+    font-size: 1rem;
+  }
+}

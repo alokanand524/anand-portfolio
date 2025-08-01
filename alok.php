@@ -91,6 +91,8 @@
             <li><a href="#" data-page="services">🛠️ Services</a></li>
             <li><a href="#" data-page="portfolio">📂 Portfolio</a></li>
             <li><a href="#" data-page="contact">✉️ Hire Me</a></li>
+
+            <li><a href="#" data-page="lost-games">🎮 Fun Games</a></li>
         </ul>
 
 
@@ -385,6 +387,157 @@
 
             </div>
         </section>
+
+        <!-- Fun Games Section -->
+        <section class="page" id="lost-games">
+            <div class="container py-5">
+                <h1 class="page-title text-center mb-5">🎮 Fun Games</h1>
+                <div class="parent-card">
+
+                    <!-- Game Card 2 -->
+                    <div class="main-card">
+                        <a href="games/color-match-game/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/color-match-game/color-match.png" class="card-img-top"
+                                    alt="Color Match Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">Color Match Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-4 main-card">
+                        <a href="games/emoji-memory/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/emoji-memory/emoji-memory.png" class="card-img-top"
+                                    alt="Emoji Memory Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">Emoji Memory Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-4 main-card">
+                        <a href="games/snake-game/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/snake-game/snake.png" class="card-img-top" alt="Snake Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">Snake Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-4 main-card">
+                        <a href="games/the-mole-game/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/the-mole-game/mole.png" class="card-img-top" alt="The Mole Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">The Mole Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-4 main-card">
+                        <a href="games/rock-paper-game/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/rock-paper-game/rock-paper.png" class="card-img-top"
+                                    alt="Rock Paper Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">Rock Paper Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-4 main-card">
+                        <a href="games/dice-game/index.html" target="_blank"
+                            class="game-card-link text-decoration-none">
+                            <div class="card h-100 shadow-sm game-card">
+                                <img src="games/dice-game/dice-game.png" class="card-img-top" alt="Dice Game">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dice Game</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .parent-card {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .main-card {
+                box-shadow: 0 10px 20px rgba(1, 71, 150, 0.2);
+            }
+
+            .game-card {
+                padding: 15px;
+            }
+
+            .game-card-link .card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
+            }
+
+            .game-card-link:hover .card {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 10px 20px rgba(1, 71, 150, 0.2);
+            }
+
+            .card-img-top {
+                height: 200px;
+                object-fit: cover;
+            }
+
+            .card-title {
+                font-weight: 600;
+            }
+
+            .card-text {
+                color: #555;
+            }
+
+            @media (max-width: 768px) {
+                .parent-card {
+                    flex-direction: row;
+                    justify-content: center;
+                }
+
+                .main-card {
+                    width: 135px;
+                }
+
+                .game-card-link .card {
+                    width: 100%;
+                }
+
+                .card-img-top {
+                    height: 149px;
+                    width: 100%;
+                }
+            }
+        </style>
+
+
+
     </main>
 
     <!-- <script>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎲 Dice Rolling Challenge</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎲 Dice Rolling Challenge</h1>
+    
+    <div class="dice-section">
+      <div class="player">
+        <h2>👤 You</h2>
+        <div class="dice" id="player-dice1">🎲</div>
+        <div class="dice" id="player-dice2">🎲</div>
+        <p class="total" id="player-total">Total: 0</p>
+      </div>
+      
+      <div class="computer">
+        <h2>🤖 Computer</h2>
+        <div class="dice" id="computer-dice1">🎲</div>
+        <div class="dice" id="computer-dice2">🎲</div>
+        <p class="total" id="computer-total">Total: 0</p>
+      </div>
+    </div>
+
+    <button id="roll-btn">🎯 Roll Dice</button>
+
+    <div id="result">Click "Roll Dice" to start!</div>
+
+    <h3>📜 History</h3>
+    <ul id="history-log"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

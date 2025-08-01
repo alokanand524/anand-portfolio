@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 24px;
+            color: #4CAF50;
+        }
+
+        .high-score {
+            font-size: 18px;
+            color: #FFC107;
+        }
+
+        .game-board {
+            width: 400px;
+            height: 400px;
+            background: #1a1a1a;
+            border: 3px solid #333;
+            border-radius: 10px;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .snake-segment {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border-radius: 3px;
+            border: 1px solid #2E7D32;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .snake-head {
+            background: linear-gradient(45deg, #66BB6A, #4CAF50) !important;
+            border: 2px solid #2E7D32 !important;
+            box-shadow: 
+                inset 0 1px 2px rgba(255, 255, 255, 0.4),
+                0 0 10px rgba(76, 175, 80, 0.5) !important;
+        }
+
+        .food {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle, #FF6B6B, #FF5252);
+            border-radius: 50%;
+            border: 2px solid #D32F2F;
+            box-shadow: 
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                0 0 15px rgba(255, 107, 107, 0.6);
+            animation: foodPulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes foodPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .mobile-controls {
+            display: none;
+            margin-top: 20px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+
+        .control-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0.95);
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .up-btn { grid-column: 2; grid-row: 1; }
+        .left-btn { grid-column: 1; grid-row: 2; }
+        .right-btn { grid-column: 3; grid-row: 2; }
+        .down-btn { grid-column: 2; grid-row: 3; }
+
+        .game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .game-over-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-over h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #FF6B6B;
+        }
+
+        .game-over p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .instructions {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .pause-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .pause-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .speed-display {
+            color: #00BCD4;
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .game-board {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .mobile-controls {
+                display: grid;
+            }
+            
+            .game-container {
+                padding: 15px;
+            }
+            
+            .instructions {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .game-board {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .vertical-line {
+            width: 1px;
+            height: 100%;
+            top: 0;
+        }
+
+        .horizontal-line {
+            width: 100%;
+            height: 1px;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="speed-display">Speed: <span id="speed">1</span></div>
+            <button class="pause-btn" id="pauseBtn">Pause</button>
+            <div class="high-score">Best: <span id="highScore">0</span></div>
+        </div>
+        
+        <div class="game-board" id="gameBoard">
+            <!-- Grid lines will be added by JavaScript -->
+        </div>
+        
+        <div class="mobile-controls" id="mobileControls">
+            <button class="control-btn up-btn" data-direction="up">▲</button>
+            <button class="control-btn left-btn" data-direction="left">◄</button>
+            <button class="control-btn right-btn" data-direction="right">►</button>
+            <button class="control-btn down-btn" data-direction="down">▼</button>
+        </div>
+        
+        <div class="instructions">
+            <strong>Desktop:</strong> Use arrow keys or WASD to move<br>
+            <strong>Mobile:</strong> Use the control buttons below<br>
+            Press SPACE to pause • Eat food to grow and increase speed
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <p>Speed Reached: <span id="finalSpeed">1</span></p>
+            <button class="restart-btn" onclick="restartGame()">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        class SnakeGame {
+            constructor() {
+                this.board = document.getElementById('gameBoard');
+                this.scoreElement = document.getElementById('score');
+                this.speedElement = document.getElementById('speed');
+                this.highScoreElement = document.getElementById('highScore');
+                this.pauseBtn = document.getElementById('pauseBtn');
+                
+                this.boardSize = 20; // 20x20 grid
+                this.cellSize = this.board.offsetWidth / this.boardSize;
+                
+                this.reset();
+                this.createGrid();
+                this.bindEvents();
+                this.loadHighScore();
+                this.gameLoop();
+            }
+
+            reset() {
+                this.snake = [{x: 10, y: 10}];
+                this.direction = {x: 0, y: 0};
+                this.food = this.generateFood();
+                this.score = 0;
+                this.speed = 1;
+                this.gameRunning = true;
+                this.paused = false;
+                this.lastMoveTime = 0;
+                
+                this.updateDisplay();
+                this.render();
+            }
+
+            createGrid() {
+                // Create subtle grid lines
+                for (let i = 1; i < this.boardSize; i++) {
+                    // Vertical lines
+                    const vLine = document.createElement('div');
+                    vLine.className = 'grid-line vertical-line';
+                    vLine.style.left = (i * this.cellSize) + 'px';
+                    this.board.appendChild(vLine);
+                    
+                    // Horizontal lines
+                    const hLine = document.createElement('div');
+                    hLine.className = 'grid-line horizontal-line';
+                    hLine.style.top = (i * this.cellSize) + 'px';
+                    this.board.appendChild(hLine);
+                }
+            }
+
+            bindEvents() {
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    this.handleKeyPress(e.key);
+                });
+
+                // Mobile controls
+                document.querySelectorAll('.control-btn').forEach(btn => {
+                    btn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        const direction = btn.dataset.direction;
+                        this.changeDirection(direction);
+                    });
+                    
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const direction = btn.dataset.direction;
+                        this.changeDirection(direction);
+                    });
+                });
+
+                // Pause button
+                this.pauseBtn.addEventListener('click', () => {
+                    this.togglePause();
+                });
+
+                // Swipe controls
+                let startX, startY;
+                this.board.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                });
+
+                this.board.addEventListener('touchend', (e) => {
+                    if (!startX || !startY) return;
+                    
+                    const endX = e.changedTouches[0].clientX;
+                    const endY = e.changedTouches[0].clientY;
+                    
+                    const deltaX = endX - startX;
+                    const deltaY = endY - startY;
+                    
+                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                        // Horizontal swipe
+                        if (deltaX > 30) this.changeDirection('right');
+                        else if (deltaX < -30) this.changeDirection('left');
+                    } else {
+                        // Vertical swipe
+                        if (deltaY > 30) this.changeDirection('down');
+                        else if (deltaY < -30) this.changeDirection('up');
+                    }
+                    
+                    startX = startY = null;
+                });
+            }
+
+            handleKeyPress(key) {
+                switch(key.toLowerCase()) {
+                    case 'arrowup':
+                    case 'w':
+                        this.changeDirection('up');
+                        break;
+                    case 'arrowdown':
+                    case 's':
+                        this.changeDirection('down');
+                        break;
+                    case 'arrowleft':
+                    case 'a':
+                        this.changeDirection('left');
+                        break;
+                    case 'arrowright':
+                    case 'd':
+                        this.changeDirection('right');
+                        break;
+                    case ' ':
+                        this.togglePause();
+                        break;
+                }
+            }
+
+            changeDirection(newDirection) {
+                if (!this.gameRunning || this.paused) return;
+
+                const directions = {
+                    up: {x: 0, y: -1},
+                    down: {x: 0, y: 1},
+                    left: {x: -1, y: 0},
+                    right: {x: 1, y: 0}
+                };
+
+                const newDir = directions[newDirection];
+                
+                // Prevent reversing into self
+                if (this.snake.length > 1) {
+                    const oppositeDir = {x: -this.direction.x, y: -this.direction.y};
+                    if (newDir.x === oppositeDir.x && newDir.y === oppositeDir.y) {
+                        return;
+                    }
+                }
+
+                this.direction = newDir;
+            }
+
+            togglePause() {
+                if (!this.gameRunning) return;
+                
+                this.paused = !this.paused;
+                this.pauseBtn.textContent = this.paused ? 'Resume' : 'Pause';
+            }
+
+            generateFood() {
+                let food;
+                do {
+                    food = {
+                        x: Math.floor(Math.random() * this.boardSize),
+                        y: Math.floor(Math.random() * this.boardSize)
+                    };
+                } while (this.snake.some(segment => segment.x === food.x && segment.y === food.y));
+                
+                return food;
+            }
+
+            move() {
+                if (!this.gameRunning || this.paused || this.direction.x === 0 && this.direction.y === 0) {
+                    return;
+                }
+
+                const head = {
+                    x: this.snake[0].x + this.direction.x,
+                    y: this.snake[0].y + this.direction.y
+                };
+
+                // Check wall collision
+                if (head.x < 0 || head.x >= this.boardSize || 
+                    head.y < 0 || head.y >= this.boardSize) {
+                    this.gameOver();
+                    return;
+                }
+
+                // Check self collision
+                if (this.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                    this.gameOver();
+                    return;
+                }
+
+                this.snake.unshift(head);
+
+                // Check food collision
+                if (head.x === this.food.x && head.y === this.food.y) {
+                    this.score += 10;
+                    this.speed = Math.min(10, Math.floor(this.score / 50) + 1);
+                    this.food = this.generateFood();
+                    this.updateDisplay();
+                } else {
+                    this.snake.pop();
+                }
+            }
+
+            render() {
+                // Clear board (keep grid lines)
+                const elements = this.board.querySelectorAll('.snake-segment, .food');
+                elements.forEach(el => el.remove());
+
+                // Render snake
+                this.snake.forEach((segment, index) => {
+                    const segmentElement = document.createElement('div');
+                    segmentElement.className = 'snake-segment';
+                    if (index === 0) {
+                        segmentElement.classList.add('snake-head');
+                    }
+                    
+                    segmentElement.style.left = (segment.x * this.cellSize + 1) + 'px';
+                    segmentElement.style.top = (segment.y * this.cellSize + 1) + 'px';
+                    this.board.appendChild(segmentElement);
+                });
+
+                // Render food
+                const foodElement = document.createElement('div');
+                foodElement.className = 'food';
+                foodElement.style.left = (this.food.x * this.cellSize + 1) + 'px';
+                foodElement.style.top = (this.food.y * this.cellSize + 1) + 'px';
+                this.board.appendChild(foodElement);
+            }
+
+            updateDisplay() {
+                this.scoreElement.textContent = this.score;
+                this.speedElement.textContent = this.speed;
+            }
+
+            gameOver() {
+                this.gameRunning = false;
+                this.saveHighScore();
+                
+                document.getElementById('finalScore').textContent = this.score;
+                document.getElementById('finalSpeed').textContent = this.speed;
+                document.getElementById('gameOver').style.display = 'flex';
+            }
+
+            saveHighScore() {
+                const currentHigh = parseInt(localStorage.getItem('snakeHighScore') || '0');
+                if (this.score > currentHigh) {
+                    localStorage.setItem('snakeHighScore', this.score.toString());
+                    this.highScoreElement.textContent = this.score;
+                }
+            }
+
+            loadHighScore() {
+                const highScore = localStorage.getItem('snakeHighScore') || '0';
+                this.highScoreElement.textContent = highScore;
+            }
+
+            gameLoop() {
+                const currentTime = Date.now();
+                const moveInterval = Math.max(50, 200 - (this.speed * 15));
+                
+                if (currentTime - this.lastMoveTime > moveInterval) {
+                    this.move();
+                    this.render();
+                    this.lastMoveTime = currentTime;
+                }
+
+                if (this.gameRunning) {
+                    requestAnimationFrame(() => this.gameLoop());
+                }
+            }
+        }
+
+        let game;
+
+        function startGame() {
+            game = new SnakeGame();
+        }
+
+        function restartGame() {
+            document.getElementById('gameOver').style.display = 'none';
+            startGame();
+        }
+
+        // Start the game when page loads
+        window.addEventListener('load', startGame);
+
+        // Prevent default touch behaviors
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.control-btn') || e.target.closest('.game-board')) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

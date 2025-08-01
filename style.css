@@ -25,16 +25,16 @@
  }
 
  body.dark-mode {
-  --primary-color: #bb86fc;
-  --secondary-color: #03dac6;
-  --dark-color: #121212;
-  --light-color: #1e1e1e;
-  --text-color: #e0e0e0;
-  --text-light: #ffffff;
-  --accent-color: #ff4081;
-  background-color: var(--light-color);
-  color: var(--text-color);
-}
+     --primary-color: #bb86fc;
+     --secondary-color: #03dac6;
+     --dark-color: #121212;
+     --light-color: #1e1e1e;
+     --text-color: #e0e0e0;
+     --text-light: #ffffff;
+     --accent-color: #ff4081;
+     background-color: var(--light-color);
+     color: var(--text-color);
+ }
 
 
  /* Sidebar Styles */
@@ -436,11 +436,30 @@
      .home-content {
          flex-direction: column;
          text-align: center;
+         margin: auto;
      }
 
      .home-text {
          padding-right: 0;
          margin-bottom: 2rem;
+     }
+
+     .btn {
+         margin-bottom: .5rem;
+     }
+
+     .home-text h1 {
+         font-size: 2rem;
+         margin-bottom: 0rem;
+         margin-top: 0rem;
+     }
+
+     .home-text h2 {
+         margin-bottom: 1rem;
+     }
+
+     .home-text p {
+         margin-bottom: 1rem;
      }
  }
 

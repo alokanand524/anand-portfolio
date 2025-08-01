@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎨 Color Match Rush</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎯 Color Match Rush</h1>
+    <p id="instruction">Match the background color!</p>
+
+    <div class="score-board">
+      Score: <span id="score">0</span>
+    </div>
+
+    <div class="buttons">
+      <button class="color-btn red" data-color="red">Red</button>
+      <button class="color-btn green" data-color="green">Green</button>
+      <button class="color-btn blue" data-color="blue">Blue</button>
+      <button class="color-btn yellow" data-color="yellow">Yellow</button>
+    </div>
+
+    <div id="status">Get Ready...</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

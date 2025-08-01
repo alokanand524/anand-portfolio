@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emoji Memory Flip Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-header">
+    <h1>🧠 Emoji Memory</h1>
+    <div class="stats">
+      <span id="moves">Moves: 0</span>
+      <span id="timer">Time: 0s</span>
+      <button id="reset">🔁 Restart</button>
+    </div>
+  </div>
+
+  <div class="game-board" id="gameBoard"></div>
+
+  <div class="win-screen" id="winScreen">
+    <h2>🎉 You Win!</h2>
+    <p>Time: <span id="finalTime"></span></p>
+    <p>Moves: <span id="finalMoves"></span></p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

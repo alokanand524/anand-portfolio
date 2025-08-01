@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emoji Dice Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎲 Dice Battle!</h1>
+    
+    <div class="score-board">
+      <div>👤 You: <span id="player-score">0</span></div>
+      <div>🤖 Computer: <span id="computer-score">0</span></div>
+    </div>
+
+    <button id="roll-btn">Roll the Dice</button>
+
+    <div class="dice-area">
+      <div class="dice" id="player-dice">❓</div>
+      <div class="dice" id="computer-dice">❓</div>
+    </div>
+
+    <div class="result-text" id="result-text">Click "Roll the Dice" to start!</div>
+
+    <h2>Game History</h2>
+    <ul id="history-log"></ul>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
