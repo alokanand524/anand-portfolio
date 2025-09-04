@@ -66,7 +66,16 @@ function resetFlip() {
 function checkWin() {
   if ($('.card.matched').length === cardValues.length) {
     setTimeout(() => {
-      alert(`🎉 You won in ${moves} moves!`);
+      const winMsg = document.createElement('div');
+      winMsg.className = 'win-message';
+      winMsg.innerHTML = `<h3>🎉 Congratulations!</h3><p>You won in ${moves} moves!</p>`;
+      winMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#4CAF50;color:white;padding:20px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:1000;text-align:center';
+      
+      document.body.appendChild(winMsg);
+      
+      setTimeout(() => {
+        document.body.removeChild(winMsg);
+      }, 3000);
     }, 500);
   }
 }
@@ -98,8 +107,7 @@ function setupDarkMode() {
   });
 }
 
+// Remove duplicate document ready and fix dark mode setup
 $(document).ready(function () {
   setupDarkMode();
-  loadFromLocal();
-  $('#roll-btn').click(playRound);
 });

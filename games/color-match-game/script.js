@@ -48,10 +48,21 @@ function startGame() {
 
 function gameOver() {
   clearInterval(interval);
-  alert(`⛔ Game Over! Final Score: ${score}`);
+  // Show game over message without alert
+  const gameOverMsg = document.createElement('div');
+  gameOverMsg.className = 'game-over-message';
+  gameOverMsg.innerHTML = `<h3>⛔ Game Over!</h3><p>Final Score: ${score}</p>`;
+  gameOverMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:1000;text-align:center';
+  
+  document.body.appendChild(gameOverMsg);
+  
+  setTimeout(() => {
+    document.body.removeChild(gameOverMsg);
+  }, 3000);
+  
   if (score > highScore) {
     highScore = score;
-    localStorage.setItem('colorMatchHighScore', highScore);
+    localStorage.setItem('colorMatchHighScore', highScore.toString());
     highScoreDisplay.textContent = `High Score: ${highScore}`;
   }
 }

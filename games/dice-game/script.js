@@ -13,7 +13,8 @@ function rollDie() {
 }
 
 function updateDice($elem, roll) {
-  $elem.addClass('animate').text(diceFaces[roll]);
+  $elem.addClass('animate');
+  $elem.text(diceFaces[roll]);
   setTimeout(() => $elem.removeClass('animate'), 300);
 }
 
@@ -23,16 +24,19 @@ function updateScores() {
 }
 
 function saveToLocal() {
-  localStorage.setItem('playerScore', playerScore);
-  localStorage.setItem('computerScore', computerScore);
+  localStorage.setItem('playerScore', playerScore.toString());
+  localStorage.setItem('computerScore', computerScore.toString());
   localStorage.setItem('historyLog', $('#history-log').html());
 }
 
 function loadFromLocal() {
   if (localStorage.getItem('playerScore')) {
-    playerScore = parseInt(localStorage.getItem('playerScore'));
-    computerScore = parseInt(localStorage.getItem('computerScore'));
-    $('#history-log').html(localStorage.getItem('historyLog'));
+    playerScore = parseInt(localStorage.getItem('playerScore')) || 0;
+    computerScore = parseInt(localStorage.getItem('computerScore')) || 0;
+    const historyData = localStorage.getItem('historyLog');
+    if (historyData) {
+      $('#history-log').text('').append(historyData);
+    }
   }
   updateScores();
 }

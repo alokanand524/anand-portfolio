@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Portfolio Website Design</title>
+    <link rel="stylesheet" href="style.css">
+    <!----Font awesome cdn  font icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="hero-header2">
+        <div class="wrapper">
+            <header>
+                <div class="logo">
+                    <i class="fa-solid fa-a"></i>
+                    <div class="logo-text">Alok Anand</div>
+                </div>
+                <nav>
+                    <div class="togglebtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul class="navlinks">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="alok_anand.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div style="margin:1rem;">
+            <form id="contactForm" class="contact-card">
+                <h2>Contact Us</h2>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control form-decor" id="name" placeholder="Your Name" required>
+
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control form-decor" id="email" placeholder="name@example.com"
+                        required>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <textarea class="form-control form-decor" placeholder="Your message" id="message"
+                        style="height: 120px" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-whatsapp w-100 py-2">Send via WhatsApp</button>
+            </form>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Get input values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            // Subject field is commented out, so set default value
+            const subject = "Portfolio Contact";
+            const message = document.getElementById("message").value.trim();
+
+            // Your WhatsApp number in international format (no + or spaces)
+            const phoneNumber = "916207338266"; // Replace with your number
+
+            // Encode message for URL
+            const text = `*Contact Form Submission*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A*Subject:* ${encodeURIComponent(subject)}%0A*Message:* ${encodeURIComponent(message)}`;
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${text}`;
+
+            // Open WhatsApp
+            window.open(whatsappURL, "_blank");
+        });
+    </script>
+
+</body>
+
+</html>

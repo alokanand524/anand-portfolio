@@ -49,8 +49,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (contactForm) {
             contactForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                alert('Message sent successfully! I will get back to you soon.');
-                contactForm.reset();
+                // Show success message without alert
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    contactForm.reset();
+                }, 2000);
             });
         }
     });
